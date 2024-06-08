@@ -27,13 +27,51 @@ function getData($request)
     echo json_encode($data);
 }
 
+function getJobsFromAddresses($addresses)
+{
+    $coordinates = [];
+
+    $ch = curl_init();
+    static $index = 0;
+    foreach ($addresses as $address) {
+        curl_setopt($ch, CURLOPT_URL, "https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf6248d1aa126574e44c94aaaa83c89563c666&text=" . urlencode($address) . "&boundary.country=CH&size=1");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Accept: application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8"
+        ));
+
+        $response = curl_exec($ch);
+        $data = json_decode($response, true);
+
+        if (count($data['features']) > 0) {
+            $job = new stdClass();
+            $job->id = $index;
+            $job->location = [
+                $data['features'][0]['geometry']['coordinates'][0],
+                $data['features'][0]['geometry']['coordinates'][1]
+            ];
+            $job->description = $address;
+            $coordinates[] = $job;
+        }
+
+        $index++;
+    }
+
+    return $coordinates;
+}
+
 function getFastestRoute($request)
 {
-    $locations = [
-        [1.98465, 48.70329],
-        [2.03655, 48.61128],
-        [2.39719, 49.07611]
+    $addresses = [
+        "Kirchgasse 3, 6340 Baar, Switzerland",
+        "Bahnhofstrasse 1, 6340 Baar, Switzerland",
+        "Lättichstrasse 6, 6340 Baar, Switzerland"
     ];
+
+
+    $jobs = getJobsFromAddresses($addresses);
 
     $vehicles = [
         [
@@ -53,15 +91,7 @@ function getFastestRoute($request)
     curl_setopt($ch, CURLOPT_POST, TRUE);
 
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        "jobs" => array_map(function ($location) {
-            static $index = 0;
-            $index++;
-            return [
-                "id" => $index,
-                "location" => $location,
-                "description" => "Job description " . $index
-            ];
-        }, $locations),
+        "jobs" => $jobs,
         "vehicles" => $vehicles,
     ]));
 
