@@ -35,6 +35,15 @@ function getFastestRoute($request)
         [2.39719, 49.07611]
     ];
 
+    $vehicles = [
+        [
+            "id" => 1,
+            "profile" => "driving-car",
+            "start" => [2.35044, 48.71764],
+            "end" => [2.35044, 48.71764]
+        ]
+    ];
+
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, "https://api.openrouteservice.org/optimization");
@@ -43,35 +52,18 @@ function getFastestRoute($request)
 
     curl_setopt($ch, CURLOPT_POST, TRUE);
 
-    curl_setopt($ch, CURLOPT_POSTFIELDS, '{
-        "jobs": [
-            {
-                "id": 1,
-                "location": [1.98465, 48.70329],
-                "description": "Job 1 description"
-            },
-            {
-                "id": 2,
-                "location": [2.03655, 48.61128],
-                "description": "Job 2 description"
-            },
-            {
-                "id": 3,
-                "location": [2.39719, 49.07611],
-                "description": "Job 3 description"
-            }
-        ],
-        "vehicles": [
-            {
-                "id": 1,
-                "profile": "driving-car",
-                "start": [2.35044, 48.71764],
-                "end": [2.35044, 48.71764]
-            }
-        ]
-    }
-    
-    ');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+        "jobs" => array_map(function ($location) {
+            static $index = 0;
+            $index++;
+            return [
+                "id" => $index,
+                "location" => $location,
+                "description" => "Job description " . $index
+            ];
+        }, $locations),
+        "vehicles" => $vehicles,
+    ]));
 
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "Accept: application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
