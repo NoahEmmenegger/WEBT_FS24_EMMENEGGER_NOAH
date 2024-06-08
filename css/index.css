@@ -5,3 +5,172 @@ header {
     display: flex;
     justify-content: space-between;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+section,
+footer,
+header,
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 50px;
+}
+
+.column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.headline {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.description {
+    font-size: 1.2em;
+    color: #666;
+}
+
+.hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.headline > b {
+    color: #007bff;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.footer-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.footer-description {
+    font-size: 1em;
+    color: #666;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-contact {
+    font-size: 1em;
+    color: #666;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 20px;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    align-items: flex-start;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: #007bff;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.icon {
+    width: 28px;
+    height: 28px;
+    color: #fff;
+}
+
+.text-container {
+    flex: 1;
+}
+
+.step-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.step-description {
+    font-size: 1em;
+    color: #666;
+    margin-top: 5px;
+}
