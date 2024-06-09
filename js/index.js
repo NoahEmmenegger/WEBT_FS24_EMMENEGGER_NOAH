@@ -73,21 +73,39 @@ function parseJSON(text) {
     }
 }
 
+function showRoute(response) {
+    // display route on map
+    console.log(response);
+    document.getElementById('route').innerHTML = `
+       <div>
+            <h3>Route</h3>
+            ${response.routes[0].steps
+                .map((step, index) => {
+                    return `
+                    <div>
+                        <p>${step.description}
+                    </div>
+                `;
+                })
+                .join('')}
+    `;
+}
+
 function calculateRoute() {
     let xhr = new XMLHttpRequest();
     xhr.onerror = function () {
-        alert('We are sorry, a programm error occured. Please contact support.');
+        //alert('We are sorry, a programm error occured. Please contact support.');
     };
     xhr.ontimeout = function () {
-        alert('The remote system could not response in time. Please check the connection.');
+        //alert('The remote system could not response in time. Please check the connection.');
     };
     xhr.onload = function () {
         let response = parseJSON(xhr.responseText);
         // verify http code and JSON format
         if (xhr.status == 200 && response != null) {
-            showEmails(response);
+            showRoute(response);
         } else {
-            alert('We are sorry, a programm error occured. Please contact support.');
+            //alert('We are sorry, a programm error occured. Please contact support.');
             console.error(
                 "Error during request: HTTP status = '" + xhr.status + "' / responseText = '" + xhr.responseText + "'"
             );
@@ -95,7 +113,9 @@ function calculateRoute() {
     };
 
     // create request JSON document
-    let body = {};
+    let body = {
+        addresses,
+    };
 
     // send document to backend using a POST request
     xhr.open('POST', 'backend.php', true);

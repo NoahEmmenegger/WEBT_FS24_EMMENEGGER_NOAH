@@ -7,7 +7,7 @@ $body = file_get_contents("php://input");
 $request = json_decode($body, true);
 
 switch ($method) {
-    case 'GET':
+    case 'POST':
         getFastestRoute($request);
         break;
     default:
@@ -64,12 +64,10 @@ function getJobsFromAddresses($addresses)
 
 function getFastestRoute($request)
 {
-    $addresses = [
-        "Kirchgasse 3, 6340 Baar, Switzerland",
-        "Bahnhofstrasse 1, 6340 Baar, Switzerland",
-        "Lättichstrasse 6, 6340 Baar, Switzerland"
-    ];
-
+    $addresses = [];
+    foreach ($request['addresses'] as $address) {
+        $addresses[] = $address['street'] . ", " . $address['zip'] . " " . $address['city'] . ", Switzerland";
+    }
 
     $jobs = getJobsFromAddresses($addresses);
 
