@@ -6,6 +6,118 @@ $method = $_SERVER['REQUEST_METHOD'];
 $body = file_get_contents("php://input");
 $request = json_decode($body, true);
 
+echo '{
+    "code": 0,
+    "summary": {
+        "cost": 449,
+        "routes": 1,
+        "unassigned": 0,
+        "setup": 0,
+        "service": 0,
+        "duration": 449,
+        "waiting_time": 0,
+        "priority": 0,
+        "violations": [],
+        "computing_times": {
+            "loading": 58,
+            "solving": 0,
+            "routing": 0
+        }
+    },
+    "unassigned": [],
+    "routes": [
+        {
+            "vehicle": 1,
+            "cost": 449,
+            "setup": 0,
+            "service": 0,
+            "duration": 449,
+            "waiting_time": 0,
+            "priority": 0,
+            "steps": [
+                {
+                    "type": "start",
+                    "location": [
+                        8.432927,
+                        47.143519
+                    ],
+                    "setup": 0,
+                    "service": 0,
+                    "waiting_time": 0,
+                    "arrival": 0,
+                    "duration": 0,
+                    "violations": [],
+                    "description": "Start at Suurstoffi 1, 6343 Risch-Rotkreuz, Switzerland"
+                },
+                {
+                    "type": "job",
+                    "description": "Forrenstrasse 2, 6343 Rotkreuz, Switzerland",
+                    "location": [
+                        8.428865,
+                        47.150221
+                    ],
+                    "id": 3,
+                    "setup": 0,
+                    "service": 0,
+                    "waiting_time": 0,
+                    "job": 3,
+                    "arrival": 201,
+                    "duration": 201,
+                    "violations": []
+                },
+                {
+                    "type": "job",
+                    "description": "Grundstrasse 4b, 6343 Risch-Rotkreuz, Switzerland",
+                    "location": [
+                        8.429819,
+                        47.144988
+                    ],
+                    "id": 2,
+                    "setup": 0,
+                    "service": 0,
+                    "waiting_time": 0,
+                    "job": 2,
+                    "arrival": 311,
+                    "duration": 311,
+                    "violations": []
+                },
+                {
+                    "type": "job",
+                    "description": "Mattenstrasse 1, 6343 Rotkreuz, Switzerland",
+                    "location": [
+                        8.430382,
+                        47.142902
+                    ],
+                    "id": 1,
+                    "setup": 0,
+                    "service": 0,
+                    "waiting_time": 0,
+                    "job": 1,
+                    "arrival": 390,
+                    "duration": 390,
+                    "violations": []
+                },
+                {
+                    "type": "end",
+                    "location": [
+                        8.432927,
+                        47.143519
+                    ],
+                    "setup": 0,
+                    "service": 0,
+                    "waiting_time": 0,
+                    "arrival": 449,
+                    "duration": 449,
+                    "violations": [],
+                    "description": "End at Suurstoffi 1, 6343 Risch-Rotkreuz, Switzerland"
+                }
+            ],
+            "violations": []
+        }
+    ]
+}';
+return;
+
 switch ($method) {
     case 'POST':
         getFastestRoute($request);

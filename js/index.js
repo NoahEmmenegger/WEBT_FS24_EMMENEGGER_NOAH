@@ -78,26 +78,47 @@ function showRoute(response) {
     console.log(response);
     document.getElementById('route').innerHTML = `
        <div>
-            <h3>Route</h3>
+            <h3>Das ist die schnellste Route!</h3>
+            <p>Wir haben aus den eingegebenen Adressen die folgende Route berechnet. Es wurde die schnellste Route gewählt. Sie sollen für möglichst schnelle Ankunft die Route befolgen.</p>
+            <p>Benötigte Zeit: ${(response.summary.duration / 60).toFixed(2)} Minuten </p>
             ${response.routes[0].steps
                 .map((step, index) => {
                     return `
                     <div>
-                        <p>${step.description}
+                        <p>${index + 1}. ${step.description}</p>
                     </div>
                 `;
                 })
                 .join('')}
+        </div>
+    `;
+}
+
+function showErrorMessage(message) {
+    document.getElementById('route').innerHTML = `
+        <div>
+            <h3>Error</h3>
+            <p>${message}</p>
+        </div>
+    `;
+}
+
+function showLoading() {
+    document.getElementById('route').innerHTML = `
+        <div>
+            <h3>Loading...</h3>
+        </div>
     `;
 }
 
 function calculateRoute() {
+    showLoading();
     let xhr = new XMLHttpRequest();
     xhr.onerror = function () {
-        alert('We are sorry, a programm error occured. Please contact support.');
+        showErrorMessage('The remote system could not be reached. Please check the connection.');
     };
     xhr.ontimeout = function () {
-        alert('The remote system could not response in time. Please check the connection.');
+        showErrorMessage('The remote system did not respond in time. Please try again later.');
     };
     xhr.onload = function () {
         let response = parseJSON(xhr.responseText);
@@ -105,7 +126,7 @@ function calculateRoute() {
         if (xhr.status == 200 && response != null) {
             showRoute(response);
         } else {
-            alert('We are sorry, a programm error occured. Please contact support.');
+            showErrorMessage(response.message);
             console.error(
                 "Error during request: HTTP status = '" + xhr.status + "' / responseText = '" + xhr.responseText + "'"
             );
