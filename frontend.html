@@ -96,6 +96,13 @@
             <section id="berechnung">
                 <div>
                     <h2>Kürzeste Route berechnung</h2>
+                    <input type="date" id="date" placeholder="Datum" />
+                    <input type="time" id="time" placeholder="Zeit" />
+                    <select id="vehicle">
+                        <option value="bike">Fahrrad</option>
+                        <option value="car">Auto</option>
+                        <option value="foot">Zu Fuss</option>
+                    </select>
                     <div id="addresses"></div>
                     <button id="add-address" onclick="addAddress()">Adresse hinzufügen</button>
                     <button id="calculate-route" onclick="calculateRoute()">Route berechnen</button>
