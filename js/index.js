@@ -126,16 +126,21 @@ function calculateRoute() {
         if (xhr.status == 200 && response != null) {
             showRoute(response);
             const locations = response.routes[0].steps.map((step) => {
-                return step.location.reverse();
+                return { coord: step.location.reverse(), description: step.description };
             });
 
-            // Hinzufügen der Marker für die Standorte
-            locations.forEach((location, index) => {
-                L.marker(location)
-                    .addTo(map)
-                    .bindPopup(`Standort ${index + 1}`)
-                    .openPopup();
-            });
+            // // Hinzufügen der Marker für die Standorte
+            // locations.forEach((location, index) => {
+            //     L.marker(location.coord)
+            //         .addTo(map)
+            //         .bindPopup(`<b>${index + 1}. ${location.description}</b>`)
+            //         .openPopup();
+            // });
+
+            L.Routing.control({
+                waypoints: locations.map((location) => L.latLng(location.coord)),
+                routeWhileDragging: false,
+            }).addTo(map);
 
             // Erstellen eines Polylinienpfads durch die Standorte
             const polyline = L.polyline(locations, { color: 'blue' }).addTo(map);
@@ -164,4 +169,8 @@ const map = L.map('map').setView([47.195, 8.525], 13); // Zentrum der Karte auf 
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
+}).addTo(map);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
