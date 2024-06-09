@@ -13,8 +13,8 @@ function generateAddressInputs(addresses) {
                 index === 0 ? 'Startadresse' : index === addresses.length - 1 ? 'Zieladresse' : `Address ${index + 1}`
             }</h3>
             <div class="address-input">
-                ${getInput(index, 'street', address.street, validate(address.street, ['required', 'min:5']))}
-                ${getInput(index, 'city', address.city, validate(address.city, ['required', 'min:5']))}
+                ${getInput(index, 'street', address.street, validate(address.street, ['required', 'min:2']))}
+                ${getInput(index, 'city', address.city, validate(address.city, ['required', 'min:2']))}
                 ${getInput(index, 'zip', address.zip, validate(address.zip, ['required', 'number', 'min:4']))}
             </div>
         `;
@@ -48,7 +48,7 @@ function validate(value, rules) {
     if (rules.includes('required') && !value) {
         return 'This field is required';
     }
-    if (rules.includes('min:5') && value.length < 5) {
+    if (rules.includes('min:2') && value.length < 2) {
         return 'This field must be at least 5 characters long';
     }
     if (rules.includes('number') && isNaN(value)) {
@@ -125,6 +125,21 @@ function calculateRoute() {
         // verify http code and JSON format
         if (xhr.status == 200 && response != null) {
             showRoute(response);
+            const locations = response.routes[0].steps.map((step) => {
+                return step.location.reverse();
+            });
+
+            // Hinzufügen der Marker für die Standorte
+            locations.forEach((location, index) => {
+                L.marker(location)
+                    .addTo(map)
+                    .bindPopup(`Standort ${index + 1}`)
+                    .openPopup();
+            });
+
+            // Erstellen eines Polylinienpfads durch die Standorte
+            const polyline = L.polyline(locations, { color: 'blue' }).addTo(map);
+            map.fitBounds(polyline.getBounds());
         } else {
             showErrorMessage(response.message);
             console.error(
@@ -144,3 +159,9 @@ function calculateRoute() {
 }
 
 generateAddressInputs(addresses);
+
+const map = L.map('map').setView([47.195, 8.525], 13); // Zentrum der Karte auf Zug, Schweiz
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);

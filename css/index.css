@@ -194,3 +194,8 @@ input {
 .address-input div {
     width: 100%;
 }
+
+#map {
+    height: 60vh;
+    width: 100%;
+}
