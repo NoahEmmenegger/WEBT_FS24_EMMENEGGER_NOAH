@@ -150,6 +150,8 @@ header,
     height: 44px;
     background-color: #007bff;
     border-radius: 50%;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-right: 15px;
 }
 
@@ -173,4 +175,22 @@ header,
     font-size: 1em;
     color: #666;
     margin-top: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.address-input {
+    width: 100%;
+    display: flex;
+    gap: 50px;
+}
+
+.address-input div {
+    width: 100%;
 }

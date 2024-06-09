@@ -54,16 +54,11 @@
                     <img class="hero-image" src="images/how_it_works.png" alt="Frontend" />
                 </div>
                 <div class="column">
-                    <h2>Anwendungsbeschreibung</h2>
-                    <p>Die Anwendung DeliveryRoute berechnet die kürzeste Route zwischen mehreren Orten.</p>
+                    <h2 class="headline">Anwendungsbeschreibung</h2>
+                    <p class="description">
+                        Die Anwendung DeliveryRoute berechnet die kürzeste Route zwischen mehreren Orten.
+                    </p>
                     <div>
-                        <div class="content">
-                            <h3 class="headline">So funktioniert's</h3>
-                            <p class="description">
-                                Unser Prozess ist einfach und effizient. Wir sorgen dafür, dass Sie die besten Routen
-                                für Ihre Zustellbedürfnisse erhalten.
-                            </p>
-                        </div>
                         <div class="steps">
                             <div class="card">
                                 <div class="icon-container">
@@ -146,14 +141,10 @@
             </section>
             <section id="berechnung">
                 <div>
-                    <h2>Kürzeste Rute berechnung</h2>
-                    <div>
-                        <label for="start">Start</label>
-                        <input type="text" id="start" />
-
-                        <label for="end">Ende</label>
-                        <input type="text" id="end" />
-                    </div>
+                    <h2>Kürzeste Route berechnung</h2>
+                    <div id="addresses"></div>
+                    <button id="add-address" onclick="addAddress()">Adresse hinzufügen</button>
+                    <button id="calculate-route">Route berechnen</button>
                 </div>
             </section>
         </main>
