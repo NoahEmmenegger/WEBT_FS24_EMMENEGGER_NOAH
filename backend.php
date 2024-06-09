@@ -71,12 +71,17 @@ function getFastestRoute($request)
 
     $jobs = getJobsFromAddresses($addresses);
 
+    $start = $jobs[0]->location;
+    $end = $jobs[count($jobs) - 1]->location;
+
+    $jobsWithoutStartAndEnd = array_slice($jobs, 1, count($jobs) - 2);
+
     $vehicles = [
         [
             "id" => 1,
             "profile" => "driving-car",
-            "start" => [2.35044, 48.71764],
-            "end" => [2.35044, 48.71764]
+            "start" => $start,
+            "end" => $end
         ]
     ];
 
@@ -89,7 +94,7 @@ function getFastestRoute($request)
     curl_setopt($ch, CURLOPT_POST, TRUE);
 
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        "jobs" => $jobs,
+        "jobs" => $jobsWithoutStartAndEnd,
         "vehicles" => $vehicles,
     ]));
 
@@ -102,5 +107,11 @@ function getFastestRoute($request)
     $response = curl_exec($ch);
     curl_close($ch);
 
-    echo $response;
+    $response = json_decode($response, true);
+
+    $response['routes'][0]['steps'][0]['description'] = "Start at " . $addresses[0];
+    $response['routes'][0]['steps'][count($response['routes'][0]['steps']) - 1]['description'] = "End at " . $addresses[count($addresses) - 1];
+
+
+    echo json_encode($response);
 }
