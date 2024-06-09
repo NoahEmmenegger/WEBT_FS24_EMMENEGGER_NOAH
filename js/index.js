@@ -94,10 +94,10 @@ function showRoute(response) {
 function calculateRoute() {
     let xhr = new XMLHttpRequest();
     xhr.onerror = function () {
-        //alert('We are sorry, a programm error occured. Please contact support.');
+        alert('We are sorry, a programm error occured. Please contact support.');
     };
     xhr.ontimeout = function () {
-        //alert('The remote system could not response in time. Please check the connection.');
+        alert('The remote system could not response in time. Please check the connection.');
     };
     xhr.onload = function () {
         let response = parseJSON(xhr.responseText);
@@ -105,7 +105,7 @@ function calculateRoute() {
         if (xhr.status == 200 && response != null) {
             showRoute(response);
         } else {
-            //alert('We are sorry, a programm error occured. Please contact support.');
+            alert('We are sorry, a programm error occured. Please contact support.');
             console.error(
                 "Error during request: HTTP status = '" + xhr.status + "' / responseText = '" + xhr.responseText + "'"
             );

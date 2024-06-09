@@ -45,6 +45,12 @@ function getJobsFromAddresses($addresses)
         $response = curl_exec($ch);
         $data = json_decode($response, true);
 
+        if (!isset($data['features'])) {
+            http_response_code(404);
+            echo json_encode(['message' => 'Address not found']);
+            return;
+        }
+
         if (count($data['features']) > 0) {
             $job = new stdClass();
             $job->id = $index;
@@ -64,8 +70,23 @@ function getJobsFromAddresses($addresses)
 
 function getFastestRoute($request)
 {
+    if (!isset($request['addresses'])) {
+        http_response_code(400);
+        echo json_encode(['message' => 'Addresses not provided']);
+        return;
+    }
+    if (count($request['addresses']) < 3) {
+        http_response_code(400);
+        echo json_encode(['message' => 'At least two addresses are required']);
+        return;
+    }
     $addresses = [];
     foreach ($request['addresses'] as $address) {
+        if (!isset($address['street']) || !isset($address['zip']) || !isset($address['city']) || $address['street'] == "" || $address['zip'] == "" || $address['city'] == "") {
+            http_response_code(400);
+            echo json_encode(['message' => 'Address is not valid']);
+            return;
+        }
         $addresses[] = $address['street'] . ", " . $address['zip'] . " " . $address['city'] . ", Switzerland";
     }
 
