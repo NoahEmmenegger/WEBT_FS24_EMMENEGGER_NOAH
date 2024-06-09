@@ -3,6 +3,10 @@ let addresses = [
     { street: 'Mattenstrasse 1', city: 'Rotkreuz', zip: '6343' },
     { street: 'Grundstrasse 4b', city: 'Risch-Rotkreuz', zip: '6343' },
     { street: 'Forrenstrasse 2', city: 'Rotkreuz', zip: '6343' },
+    { street: 'Chamerstrasse 172', city: 'Zug', zip: '6300' },
+    { street: 'Bahnhofstrasse 1', city: 'Zug', zip: '6300' },
+    { street: 'Gotthardstrasse 2', city: 'Zug', zip: '6300' },
+    { street: 'Chamerstrasse 172', city: 'Zug', zip: '6300' },
     { street: 'Suurstoffi 1', city: 'Risch-Rotkreuz', zip: '6343' },
 ];
 
@@ -40,7 +44,8 @@ function getInput(index, key, value, error = '') {
 }
 
 function addAddress() {
-    addresses.push({ street: '', number: '', city: '', zip: '' });
+    // push second last
+    addresses.splice(addresses.length - 1, 0, { street: '', city: '', zip: '' });
     generateAddressInputs(addresses);
 }
 
