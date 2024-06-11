@@ -135,18 +135,26 @@ function showLoading() {
 }
 
 function validateRequest(addresses, date, time, vehicle) {
+    if (!addresses) {
+        throw new Error('Please enter addresses');
+    }
     if (addresses.length < 3) {
         throw new Error('Please enter at least 3 addresses');
     }
-    if (!date) {
+    if (!date || date === '') {
         throw new Error('Please enter a date');
     }
-    if (!time) {
+    if (!time || time === '') {
         throw new Error('Please enter a time');
     }
-    if (!vehicle) {
+    if (!vehicle || vehicle === '') {
         throw new Error('Please select a vehicle');
     }
+    addresses.forEach((address) => {
+        if (!address.street || !address.city || !address.zip) {
+            throw new Error('Please enter all address fields');
+        }
+    });
 }
 
 function calculateRoute() {
