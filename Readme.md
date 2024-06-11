@@ -71,3 +71,5 @@ Dieses Dokument bestätigt, dass alle geforderten Kriterien und Rahmenbedingunge
 Viel Erfolg bei der Bewertung!
 
 Noah Emmenegger
+
+![Bild von der Applikation](./images/preview.png)
