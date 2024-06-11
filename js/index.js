@@ -65,18 +65,10 @@ function deleteAddress(index) {
 }
 
 function validate(value, rules) {
-    if (rules.includes('required') && !value) {
-        return 'This field is required';
-    }
-    if (rules.includes('min:2') && value.length < 2) {
-        return 'This field must be at least 2 characters long';
-    }
-    if (rules.includes('number') && isNaN(value)) {
-        return 'This field must be a number';
-    }
-    if (rules.includes('min:4') && value.length < 4) {
-        return 'This field must be at least 4 characters long';
-    }
+    if (rules.includes('required') && !value) return 'This field is required';
+    if (rules.includes('min:2') && value.length < 2) return 'This field must be at least 2 characters long';
+    if (rules.includes('number') && isNaN(value)) return 'This field must be a number';
+    if (rules.includes('min:4') && value.length < 4) return 'This field must be at least 4 characters long';
     return '';
 }
 
@@ -95,7 +87,6 @@ function parseJSON(text) {
 
 function showRoute(response) {
     // display route on map
-    console.log(response);
     document.getElementById('route').innerHTML = `
        <div>
             <h3>${response.message}</h3>
@@ -136,12 +127,8 @@ function showLoading() {
 
 function validateRequest(addresses, date, time, vehicle) {
     let errors = [];
-    if (!addresses) {
-        errors.push('Please enter addresses');
-    }
-    if (addresses.length < 3) {
-        errors.push('Please enter at least 3 addresses');
-    }
+    if (!addresses) errors.push('Please enter addresses');
+    if (addresses.length < 3) errors.push('Please enter at least 3 addresses');
     if (!date || date === '') {
         document.getElementById('date').parentNode.innerHTML += `<span style="color: red;">Please enter a date</span>`;
         errors.push('Please enter a date');
@@ -161,9 +148,7 @@ function validateRequest(addresses, date, time, vehicle) {
             errors.push('Please enter all address fields');
         }
     });
-    if (errors.length > 0) {
-        throw new Error(errors.join('<br>'));
-    }
+    if (errors.length > 0) throw new Error(errors.join('<br>'));
 }
 
 function calculateRoute() {
@@ -180,20 +165,11 @@ function calculateRoute() {
     }
 
     // create request JSON document
-    let body = {
-        addresses,
-        date,
-        time,
-        vehicle,
-    };
+    let body = { addresses, date, time, vehicle };
 
     let xhr = new XMLHttpRequest();
-    xhr.onerror = function () {
-        showErrorMessage('The remote system could not be reached. Please check the connection.');
-    };
-    xhr.ontimeout = function () {
-        showErrorMessage('The remote system did not respond in time. Please try again later.');
-    };
+    xhr.onerror = () => showErrorMessage('The remote system could not be reached. Please check the connection.');
+    xhr.ontimeout = () => showErrorMessage('The remote system did not respond in time. Please try again later.');
     xhr.onload = function () {
         let response = parseJSON(xhr.responseText);
         // verify http code and JSON format
@@ -202,14 +178,6 @@ function calculateRoute() {
             const locations = response.routes[0].steps.map((step) => {
                 return { coord: step.location.reverse(), description: step.description };
             });
-
-            // // Hinzufügen der Marker für die Standorte
-            // locations.forEach((location, index) => {
-            //     L.marker(location.coord)
-            //         .addTo(map)
-            //         .bindPopup(`<b>${index + 1}. ${location.description}</b>`)
-            //         .openPopup();
-            // });
 
             L.Routing.control({
                 waypoints: locations.map((location) => L.latLng(location.coord)),
