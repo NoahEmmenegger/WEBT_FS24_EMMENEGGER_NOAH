@@ -232,6 +232,34 @@ function calculateRoute() {
     xhr.send(JSON.stringify(body));
 }
 
+function draw() {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#ff5e00';
+    ctx.strokeStyle = '#ff5e00';
+
+    // Draws a simple package symbol
+    ctx.fillRect(0, 50, 100, 70); // Outer rectangle
+    ctx.beginPath();
+    ctx.moveTo(0, 85);
+    ctx.lineTo(200, 85); // Middle line
+    ctx.stroke();
+
+    // Draws a simple route symbol
+    ctx.beginPath();
+    ctx.arc(200, 85, 20, 0, Math.PI * 2, true); // Start point
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(300, 85, 20, 0, Math.PI * 2, true); // End point
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(220, 85);
+    ctx.lineTo(280, 85); // Route line
+    ctx.stroke();
+}
+
 generateAddressInputs(addresses);
 
 const map = L.map('map').setView([47.195, 8.525], 13); // Zentrum der Karte auf Zug, Schweiz
