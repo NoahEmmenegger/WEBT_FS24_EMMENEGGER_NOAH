@@ -69,7 +69,7 @@ function validate(value, rules) {
         return 'This field is required';
     }
     if (rules.includes('min:2') && value.length < 2) {
-        return 'This field must be at least 5 characters long';
+        return 'This field must be at least 2 characters long';
     }
     if (rules.includes('number') && isNaN(value)) {
         return 'This field must be a number';
