@@ -13,9 +13,19 @@ let addresses = [
 function generateAddressInputs(addresses) {
     const addressInputs = addresses.map((address, index) => {
         return `
-            <h3>${
-                index === 0 ? 'Startadresse' : index === addresses.length - 1 ? 'Zieladresse' : `Address ${index + 1}`
-            }</h3>
+            <h3 style="${
+                index === 0 ? 'color: green;' : index === addresses.length - 1 ? 'color: red;' : ''
+            } border-top: 1px solid black;">
+                ${
+                    index === 0
+                        ? 'Startadresse'
+                        : index === addresses.length - 1
+                        ? 'Zieladresse'
+                        : `Address ${index + 1}`
+                } 
+                <button onclick="deleteAddress(${index})" style="background-color: var(--primary-color); color: white;">Delete</button>
+            </h3>
+           
             <div class="address-input">
                 ${getInput(index, 'street', address.street, validate(address.street, ['required', 'min:2']))}
                 ${getInput(index, 'city', address.city, validate(address.city, ['required', 'min:2']))}
@@ -46,6 +56,11 @@ function getInput(index, key, value, error = '') {
 function addAddress() {
     // push second last
     addresses.splice(addresses.length - 1, 0, { street: '', city: '', zip: '' });
+    generateAddressInputs(addresses);
+}
+
+function deleteAddress(index) {
+    addresses.splice(index, 1);
     generateAddressInputs(addresses);
 }
 
