@@ -135,26 +135,35 @@ function showLoading() {
 }
 
 function validateRequest(addresses, date, time, vehicle) {
+    let errors = [];
     if (!addresses) {
-        throw new Error('Please enter addresses');
+        errors.push('Please enter addresses');
     }
     if (addresses.length < 3) {
-        throw new Error('Please enter at least 3 addresses');
+        errors.push('Please enter at least 3 addresses');
     }
     if (!date || date === '') {
-        throw new Error('Please enter a date');
+        document.getElementById('date').parentNode.innerHTML += `<span style="color: red;">Please enter a date</span>`;
+        errors.push('Please enter a date');
     }
     if (!time || time === '') {
-        throw new Error('Please enter a time');
+        document.getElementById('time').parentNode.innerHTML += `<span style="color: red;">Please enter a time</span>`;
+        errors.push('Please enter a time');
     }
     if (!vehicle || vehicle === '') {
-        throw new Error('Please select a vehicle');
+        document.getElementById(
+            'vehicle'
+        ).parentNode.innerHTML += `<span style="color: red;">Please select a vehicle</span>`;
+        errors.push('Please select a vehicle');
     }
     addresses.forEach((address) => {
         if (!address.street || !address.city || !address.zip) {
-            throw new Error('Please enter all address fields');
+            errors.push('Please enter all address fields');
         }
     });
+    if (errors.length > 0) {
+        throw new Error(errors.join('<br>'));
+    }
 }
 
 function calculateRoute() {

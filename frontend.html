@@ -97,16 +97,22 @@
             <section id="berechnung">
                 <div>
                     <h2>Kürzeste Route berechnung</h2>
-                    <label for="date">Datum an welchem Sie die Route fahren möchten:</label>
-                    <input type="date" id="date" placeholder="Datum" value="2024-01-01" />
-                    <label for="time">Zeit:</label>
-                    <input type="time" id="time" placeholder="Zeit" value="12:00" />
-                    <label for="vehicle">Fahrzeug:</label>
-                    <select id="vehicle">
-                        <option value="bike">Fahrrad</option>
-                        <option value="car">Auto</option>
-                        <option value="foot">Zu Fuss</option>
-                    </select>
+                    <div>
+                        <label for="date">Datum an welchem Sie die Route fahren möchten:</label>
+                        <input type="date" id="date" placeholder="Datum" value="2024-01-01" />
+                    </div>
+                    <div>
+                        <label for="time">Zeit:</label>
+                        <input type="time" id="time" placeholder="Zeit" value="12:00" />
+                    </div>
+                    <div>
+                        <label for="vehicle">Fahrzeug:</label>
+                        <select id="vehicle">
+                            <option value="bike">Fahrrad</option>
+                            <option value="car">Auto</option>
+                            <option value="foot">Zu Fuss</option>
+                        </select>
+                    </div>
                     <div id="addresses"></div>
                     <button id="add-address" onclick="addAddress()" aria-label="Adresse hinzufügen">
                         Adresse hinzufügen
