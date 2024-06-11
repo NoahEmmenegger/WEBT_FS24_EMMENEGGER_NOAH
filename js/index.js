@@ -119,7 +119,7 @@ function showRoute(response) {
 
 function showErrorMessage(message) {
     document.getElementById('route').innerHTML = `
-        <div>
+        <div class="w3-panel w3-red">
             <h3>Error</h3>
             <p>${message}</p>
         </div>
@@ -128,7 +128,7 @@ function showErrorMessage(message) {
 
 function showLoading() {
     document.getElementById('route').innerHTML = `
-        <div>
+        <div class="w3-panel w3-blue">
             <h3>Loading...</h3>
         </div>
     `;
