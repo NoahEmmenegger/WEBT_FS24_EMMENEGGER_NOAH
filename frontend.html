@@ -47,7 +47,7 @@
             </section>
             <section class="row" id="anwendungsbeschreibung">
                 <div class="column row">
-                    <img class="hero-image" src="images/how_it_works.png" alt="Frontend" />
+                    <!DOCTYPE html>
                 </div>
                 <div class="column">
                     <h2 class="headline">Anwendungsbeschreibung</h2>
@@ -96,23 +96,30 @@
             <section id="berechnung">
                 <div>
                     <h2>Kürzeste Route berechnung</h2>
+                    <label for="date">Datum an welchem Sie die Route fahren möchten:</label>
                     <input type="date" id="date" placeholder="Datum" value="2024-01-01" />
+                    <label for="time">Zeit:</label>
                     <input type="time" id="time" placeholder="Zeit" value="12:00" />
+                    <label for="vehicle">Fahrzeug:</label>
                     <select id="vehicle">
                         <option value="bike">Fahrrad</option>
                         <option value="car">Auto</option>
                         <option value="foot">Zu Fuss</option>
                     </select>
                     <div id="addresses"></div>
-                    <button id="add-address" onclick="addAddress()">Adresse hinzufügen</button>
-                    <button id="calculate-route" onclick="calculateRoute()">Route berechnen</button>
+                    <button id="add-address" onclick="addAddress()" aria-label="Adresse hinzufügen">
+                        Adresse hinzufügen
+                    </button>
+                    <button id="calculate-route" onclick="calculateRoute()" aria-label="Route berechnen">
+                        Route berechnen
+                    </button>
                     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
                     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
                     <div id="route">
                         <h2>Ausgabebereich</h2>
                         <p>Klicken Sie auf "Route berechnen", um die kürzeste Route zu berechnen.</p>
                     </div>
-                    <div id="map"></div>
+                    <div id="map" alt="Map of the route"></div>
                 </div>
             </section>
         </main>
