@@ -3,7 +3,7 @@
 }
 
 header {
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
 }
 
@@ -80,16 +80,6 @@ header,
 
 .headline > b {
     color: var(--primary-color);
-}
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    color: white;
-    background-color: var(--primary-color);
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 20px;
 }
 
 .button:hover {
@@ -189,11 +179,18 @@ input {
 }
 
 @media screen and (max-width: 768px) {
+    header {
+        display: block !important;
+    }
     nav ul {
         flex-direction: column;
     }
 
     .headline {
         font-size: 2em;
+    }
+
+    .address-input {
+        flex-direction: column;
     }
 }

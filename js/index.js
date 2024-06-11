@@ -171,20 +171,20 @@ function draw() {
 
     ctx.fillStyle = '#ff5e00';
     ctx.strokeStyle = '#ff5e00';
-    ctx.fillRect(0, 50, 100, 70);
+    ctx.fillRect(0, 0, 100, 70);
     ctx.beginPath();
-    ctx.moveTo(0, 85);
-    ctx.lineTo(200, 85);
+    ctx.moveTo(0, 40);
+    ctx.lineTo(200, 40);
     ctx.stroke();
     ctx.beginPath();
-    ctx.arc(200, 85, 20, 0, Math.PI * 2, true);
+    ctx.arc(200, 40, 20, 0, Math.PI * 2, true);
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(300, 85, 20, 0, Math.PI * 2, true);
+    ctx.arc(300, 40, 20, 0, Math.PI * 2, true);
     ctx.fill();
     ctx.beginPath();
-    ctx.moveTo(220, 85);
-    ctx.lineTo(280, 85);
+    ctx.moveTo(220, 40);
+    ctx.lineTo(280, 40);
     ctx.stroke();
 }
 
