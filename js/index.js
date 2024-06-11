@@ -101,6 +101,9 @@ function showRoute(response) {
             <h3>${response.message}</h3>
             <p>Wir haben aus den eingegebenen Adressen die folgende Route berechnet. Es wurde die schnellste Route gewählt. Sie sollen für möglichst schnelle Ankunft die Route befolgen.</p>
             <p>Benötigte Zeit: ${(response.summary.duration / 60).toFixed(2)} Minuten </p>
+            <p>Benutzte Berechnung für Fahrrad: ${response['vehicle_bike_count']}</p>
+            <p>Benutzte Berechnung für Auto: ${response['vehicle_car_count']}</p>
+            <p>Benutzte Berechnung für Fussgänger: ${response['vehicle_foot_count']}</p>
             ${response.routes[0].steps
                 .map((step, index) => {
                     return `

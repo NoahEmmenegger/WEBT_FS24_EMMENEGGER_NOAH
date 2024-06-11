@@ -257,6 +257,20 @@ function getFastestRoute($request)
     $response['routes'][0]['steps'][0]['description'] = "Start at " . $addresses[0];
     $response['routes'][0]['steps'][count($response['routes'][0]['steps']) - 1]['description'] = "End at " . $addresses[count($addresses) - 1];
 
+    // set cookie how many times the user calculated a route for each vehicle
+    $response['vehicle_bike_count'] = isset($_COOKIE['vehicle_bike']) ? $_COOKIE['vehicle_bike'] : 0;
+    $response['vehicle_car_count'] = isset($_COOKIE['vehicle_car']) ? $_COOKIE['vehicle_car'] : 0;
+    $response['vehicle_foot_count'] = isset($_COOKIE['vehicle_foot']) ? $_COOKIE['vehicle_foot'] : 0;
+
+    $cookieName = "vehicle_" . $request['vehicle'];
+    if (!isset($_COOKIE[$cookieName])) {
+        setcookie($cookieName, 1, time() + 60 * 60 * 24 * 365, "/");
+        $response[$cookieName . '_count'] = 1;
+    } else {
+        $newCount = $_COOKIE[$cookieName] + 1;
+        setcookie($cookieName, $newCount, time() + 60 * 60 * 24 * 365, "/");
+        $response[$cookieName . '_count'] = $newCount;
+    }
 
     echo json_encode($response);
 }
