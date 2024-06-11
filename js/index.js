@@ -83,7 +83,7 @@ function showRoute(response) {
     console.log(response);
     document.getElementById('route').innerHTML = `
        <div>
-            <h3>Das ist die schnellste Route!</h3>
+            <h3>${response.message}</h3>
             <p>Wir haben aus den eingegebenen Adressen die folgende Route berechnet. Es wurde die schnellste Route gewählt. Sie sollen für möglichst schnelle Ankunft die Route befolgen.</p>
             <p>Benötigte Zeit: ${(response.summary.duration / 60).toFixed(2)} Minuten </p>
             ${response.routes[0].steps
@@ -116,8 +116,42 @@ function showLoading() {
     `;
 }
 
+function validateRequest(addresses, date, time, vehicle) {
+    if (addresses.length < 3) {
+        throw new Error('Please enter at least 3 addresses');
+    }
+    if (!date) {
+        throw new Error('Please enter a date');
+    }
+    if (!time) {
+        throw new Error('Please enter a time');
+    }
+    if (!vehicle) {
+        throw new Error('Please select a vehicle');
+    }
+}
+
 function calculateRoute() {
     showLoading();
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const vehicle = document.getElementById('vehicle').value;
+
+    try {
+        validateRequest(addresses, date, time, vehicle);
+    } catch (e) {
+        showErrorMessage(e.message);
+        return;
+    }
+
+    // create request JSON document
+    let body = {
+        addresses,
+        date,
+        time,
+        vehicle,
+    };
+
     let xhr = new XMLHttpRequest();
     xhr.onerror = function () {
         showErrorMessage('The remote system could not be reached. Please check the connection.');
@@ -156,11 +190,6 @@ function calculateRoute() {
                 "Error during request: HTTP status = '" + xhr.status + "' / responseText = '" + xhr.responseText + "'"
             );
         }
-    };
-
-    // create request JSON document
-    let body = {
-        addresses,
     };
 
     // send document to backend using a POST request

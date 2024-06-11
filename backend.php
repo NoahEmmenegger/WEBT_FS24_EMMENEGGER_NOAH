@@ -189,9 +189,20 @@ function getFastestRoute($request)
     }
     if (count($request['addresses']) < 3) {
         http_response_code(400);
-        echo json_encode(['message' => 'At least two addresses are required']);
+        echo json_encode(['message' => 'At least 3 addresses are required']);
         return;
     }
+    if (!isset($request['date']) || !isset($request['time']) || $request['date'] == "" || $request['time'] == "") {
+        http_response_code(400);
+        echo json_encode(['message' => 'Date or time not provided']);
+        return;
+    }
+    if (!isset($request['vehicle']) || $request['vehicle'] == "") {
+        http_response_code(400);
+        echo json_encode(['message' => 'Vehicle not provided']);
+        return;
+    }
+
     $addresses = [];
     foreach ($request['addresses'] as $address) {
         if (!isset($address['street']) || !isset($address['zip']) || !isset($address['city']) || $address['street'] == "" || $address['zip'] == "" || $address['city'] == "") {
@@ -242,6 +253,7 @@ function getFastestRoute($request)
 
     $response = json_decode($response, true);
 
+    $response['message'] = "Das ist die schnellste Route für das Fahrzeug " . $request['vehicle'] . " am " . $request['date'] . " um " . $request['time'] . " Uhr.";
     $response['routes'][0]['steps'][0]['description'] = "Start at " . $addresses[0];
     $response['routes'][0]['steps'][count($response['routes'][0]['steps']) - 1]['description'] = "End at " . $addresses[count($addresses) - 1];
 
